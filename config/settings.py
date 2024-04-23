@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(' ')
 AUTH_USER_MODEL = 'accounts.User'
 
 # Application definition
@@ -95,7 +95,7 @@ DATABASES = {
     }
 }
 
-database_url = config("database_url")
+database_url = config('DATABASE_URL')
 DATABASES['default'] = dj_database_url.parse(database_url)
 
 # Password validation
