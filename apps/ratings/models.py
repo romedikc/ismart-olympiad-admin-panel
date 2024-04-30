@@ -1,4 +1,4 @@
-from accounts.models import User
+from apps.accounts import User
 from django.db import models
 
 class Category(models.Model):
