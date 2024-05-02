@@ -4,6 +4,9 @@ psycopg2-binary
 python-decouple
 django-rest-swagger
 drf-yasg
+drf-extra-fields
+djangorestframework-simplejwt
 gunicorn
 dj-database-url
 urllib3==1.26.6
+Pillow
