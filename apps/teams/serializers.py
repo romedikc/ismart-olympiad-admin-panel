@@ -10,14 +10,14 @@ class ParticipantSerializer(serializers.ModelSerializer):
 
 
 class TeamSerializer(serializers.ModelSerializer):
+    participants = ParticipantSerializer(many=True, read_only=True)
+
     class Meta:
         model = Team
-        fields = ['id', 'name', 'school', 'subcategory']
+        fields = ['id', 'name', 'school', 'subcategory', 'participants']
 
 
 class TeamParticipantSerializer(serializers.ModelSerializer):
-    participant = ParticipantSerializer()
-
     class Meta:
         model = TeamParticipant
         fields = ['id', 'team', 'participant']
