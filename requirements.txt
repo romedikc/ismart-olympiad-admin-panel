@@ -10,3 +10,4 @@ gunicorn
 dj-database-url
 urllib3==1.26.6
 Pillow
+drf-spectacular

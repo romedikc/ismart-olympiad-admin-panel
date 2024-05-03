@@ -18,24 +18,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from drf_yasg import openapi
-from drf_yasg.views import get_schema_view
-from rest_framework import permissions
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
-schema_view = get_schema_view(
-    openapi.Info(
-        title="Episyche Technologies",
-        default_version='v1', ),
-    public=True,
-    permission_classes=(permissions.AllowAny,),
-)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/accounts/', include('apps.accounts.urls')),
     path('api/v1/games/', include('apps.games.urls')),
     path('api/v1/teams/', include('apps.teams.urls')),
-    path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('api/v1/schema/', SpectacularAPIView.as_view(), name="schema"),
+    path('api/v1/docs/', SpectacularSwaggerView.as_view(template_name="swagger-ui.html", url_name="schema"), name="swagger-ui", ),
+
 ]
 
 if settings.DEBUG:
