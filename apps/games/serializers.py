@@ -21,7 +21,7 @@ class SubCategorySerializer(serializers.ModelSerializer):
         queryset=Category.objects.all(),
         presentation_serializer=CategorySerializer
     )
-     
+
     class Meta:
         model = Subcategory
         fields = ['id',
