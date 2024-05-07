@@ -5,7 +5,7 @@ from apps.accounts.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    photo = models.ImageField(upload_to='media', blank=True)
+    photo = models.ImageField(upload_to='media', null=True, blank=True)
 
     def __str__(self):
         return self.name
