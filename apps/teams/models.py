@@ -50,13 +50,24 @@ class TimeCount(models.Model):
 class RoundRobin(models.Model):
     team1 = models.ForeignKey(Team, related_name="team1_match", on_delete=models.CASCADE)
     team2 = models.ForeignKey(Team, related_name="team2_match", on_delete=models.CASCADE)
-    score_team1 = models.IntegerField(default=0)
-    score_team2 = models.IntegerField(default=0)
+    score_team1 = models.PositiveIntegerField(default=0)
+    score_team2 = models.PositiveIntegerField(default=0)
 
     def save(self, *args, **kwargs):
+        if not self.pk:
+            self._previous_score_team1 = 0
+            self._previous_score_team2 = 0
+        else:
+            round_robin_instance = RoundRobin.objects.get(pk=self.pk)
+            self._previous_score_team1 = round_robin_instance.score_team1
+            self._previous_score_team2 = round_robin_instance.score_team2
+
         with transaction.atomic():
             team1 = self.team1
             team2 = self.team2
+
+            team1.round_robin_total -= self._previous_score_team1
+            team2.round_robin_total -= self._previous_score_team2
 
             team1.round_robin_total += self.score_team1
             team2.round_robin_total += self.score_team2
