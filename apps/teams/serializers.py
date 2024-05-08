@@ -35,8 +35,8 @@ class TimeCountSerializer(serializers.ModelSerializer):
         fields = ['id',
                   'team',
                   'game',
-                  'first_score',
-                  'second_score',
-                  'third_score',
-                  'total_time'
+                  'first_time',
+                  'second_time',
+                  'third_time',
+                  'least_time'
                   ]
