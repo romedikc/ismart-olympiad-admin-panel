@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'corsheaders',
     'whitenoise.runserver_nostatic',
-    'django.contrib.staticfiles',
 
     # apps
     'apps.accounts',
