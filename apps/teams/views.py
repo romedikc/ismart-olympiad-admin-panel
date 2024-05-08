@@ -1,7 +1,8 @@
 from rest_framework import viewsets
 
-from apps.teams.models import Participant, Team, TeamParticipant, TimeCount
-from apps.teams.serializers import TeamParticipantSerializer, TeamSerializer, ParticipantSerializer, TimeCountSerializer
+from apps.teams.models import Participant, Team, TeamParticipant, TimeCount, RoundRobin
+from apps.teams.serializers import TeamParticipantSerializer, TeamSerializer, ParticipantSerializer, \
+    TimeCountSerializer, RoundRobinSerializer
 
 
 class ParticipantViewSet(viewsets.ModelViewSet):
@@ -22,3 +23,8 @@ class TeamMembershipViewSet(viewsets.ModelViewSet):
 class TimeCountViewSet(viewsets.ModelViewSet):
     queryset = TimeCount.objects.all()
     serializer_class = TimeCountSerializer
+
+
+class RoundRobinViewSet(viewsets.ModelViewSet):
+    queryset = RoundRobin.objects.all()
+    serializer_class = RoundRobinSerializer

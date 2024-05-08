@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Participant, Team, TeamParticipant, TimeCount
+from .models import Participant, Team, TeamParticipant, TimeCount, RoundRobin
 
 
 class ParticipantSerializer(serializers.ModelSerializer):
@@ -20,7 +20,9 @@ class TeamSerializer(serializers.ModelSerializer):
                   'subcategory',
                   'participants',
                   'is_arrived',
-                  'is_active']
+                  'is_active',
+                  'round_robin_total']
+        read_only_fields = ['round_robin_total']
 
 
 class TeamParticipantSerializer(serializers.ModelSerializer):
@@ -39,4 +41,15 @@ class TimeCountSerializer(serializers.ModelSerializer):
                   'second_time',
                   'third_time',
                   'least_time'
+                  ]
+
+
+class RoundRobinSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RoundRobin
+        fields = ['id',
+                  'team1',
+                  'team2',
+                  'score_team1',
+                  'score_team2',
                   ]

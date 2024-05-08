@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 
 from apps.games.models import Subcategory
 
@@ -19,6 +19,7 @@ class Team(models.Model):
     participants = models.ManyToManyField(Participant, through='TeamParticipant')
     is_arrived = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
+    round_robin_total = models.IntegerField(default=0)
 
 
 class TeamParticipant(models.Model):
@@ -44,3 +45,23 @@ class TimeCount(models.Model):
         if self.third_time != 0.0:
             self.least_time = min(self.first_time, self.second_time, self.third_time)
         super().save(*args, **kwargs)
+
+
+class RoundRobin(models.Model):
+    team1 = models.ForeignKey(Team, related_name="team1_match", on_delete=models.CASCADE)
+    team2 = models.ForeignKey(Team, related_name="team2_match", on_delete=models.CASCADE)
+    score_team1 = models.IntegerField(default=0)
+    score_team2 = models.IntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        with transaction.atomic():
+            team1 = self.team1
+            team2 = self.team2
+
+            team1.round_robin_total += self.score_team1
+            team2.round_robin_total += self.score_team2
+
+            team1.save(update_fields=['round_robin_total'])
+            team2.save(update_fields=['round_robin_total'])
+
+            super().save(*args, **kwargs)
