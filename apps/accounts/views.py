@@ -3,6 +3,7 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
+from datetime import timedelta
 
 from apps.accounts.models import User
 from apps.accounts.serializers import RegisterSerializer, LoginSerializer, UserUpdateSerializer
@@ -43,7 +44,7 @@ class LoginView(CreateAPIView):
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
-        refresh = RefreshToken.for_user(user)
+        refresh = RefreshToken.for_user(user, refresh_token_lifetime=timedelta(days=1))
         is_superuser = user.is_superuser
 
         return Response(
