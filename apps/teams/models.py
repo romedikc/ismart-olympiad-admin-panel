@@ -21,6 +21,9 @@ class Team(models.Model):
     is_active = models.BooleanField(default=False)
     round_robin_total = models.IntegerField(default=0)
 
+    def __str__(self):
+        return f"{self.school} - {self.name}: {self.subcategory}"
+
 
 class TeamParticipant(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
