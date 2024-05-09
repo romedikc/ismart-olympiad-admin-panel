@@ -14,6 +14,7 @@ class Participant(models.Model):
 
 
 class Team(models.Model):
+    id = models.IntegerField(primary_key=True)
     FIRST = 1
     SECOND = 2
     THIRD = 3
