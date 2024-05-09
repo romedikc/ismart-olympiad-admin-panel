@@ -2,6 +2,8 @@ from drf_extra_fields.relations import PresentablePrimaryKeyRelatedField
 from rest_framework import serializers
 
 from .models import Participant, Team, TeamParticipant, TimeCount, RoundRobin
+from ..games.models import Subcategory
+from ..games.serializers import SubCategorySerializer
 
 
 class ParticipantSerializer(serializers.ModelSerializer):
@@ -33,6 +35,15 @@ class TeamParticipantSerializer(serializers.ModelSerializer):
 
 
 class TimeCountSerializer(serializers.ModelSerializer):
+    team = PresentablePrimaryKeyRelatedField(
+        queryset=Team.objects.all(),
+        presentation_serializer=TeamSerializer
+    )
+    game = PresentablePrimaryKeyRelatedField(
+        queryset=Subcategory.objects.all(),
+        presentation_serializer=SubCategorySerializer
+    )
+
     class Meta:
         model = TimeCount
         fields = ['id',
