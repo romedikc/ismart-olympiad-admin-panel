@@ -44,6 +44,9 @@ class TimeCount(models.Model):
     third_time = models.FloatField(default=0.0)
     least_time = models.FloatField(default=0.0)
 
+    class Meta:
+        unique_together = ('team', 'game')
+
     def save(self, *args, **kwargs):
         if self.third_time != 0.0:
             self.least_time = min(self.first_time, self.second_time, self.third_time)
