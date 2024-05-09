@@ -4,9 +4,9 @@ from apps.games.models import Subcategory
 
 
 class Participant(models.Model):
-    first_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
-    phone_number = models.CharField(max_length=20)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
 
     def __str__(self):
         return self.first_name
