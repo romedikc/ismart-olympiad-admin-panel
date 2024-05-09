@@ -13,6 +13,7 @@ class ParticipantViewSet(viewsets.ModelViewSet):
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
+    filterset_fields = ["subcategory"]
 
 
 class TeamMembershipViewSet(viewsets.ModelViewSet):
@@ -23,6 +24,7 @@ class TeamMembershipViewSet(viewsets.ModelViewSet):
 class TimeCountViewSet(viewsets.ModelViewSet):
     queryset = TimeCount.objects.all()
     serializer_class = TimeCountSerializer
+    filterset_fields = ["team__is_arrived"]
 
 
 class RoundRobinViewSet(viewsets.ModelViewSet):
