@@ -5,7 +5,7 @@ from apps.games.models import Subcategory
 
 class Participant(models.Model):
     first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255, null=True, blank=True)
     phone_number = models.CharField(max_length=20)
 
     def __str__(self):
@@ -55,9 +55,6 @@ class TimeCount(models.Model):
     second_time = models.FloatField(default=0.0)
     third_time = models.FloatField(default=0.0)
     least_time = models.FloatField(default=0.0)
-
-    class Meta:
-        unique_together = ('team', 'game')
 
     def save(self, *args, **kwargs):
         if self.third_time != 0.0:
