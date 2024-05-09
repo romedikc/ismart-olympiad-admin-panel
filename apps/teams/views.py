@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.pagination import PageNumberPagination
 
 from apps.teams.models import Participant, Team, TeamParticipant, TimeCount, RoundRobin
 from apps.teams.serializers import TeamParticipantSerializer, TeamSerializer, ParticipantSerializer, \
@@ -8,12 +9,14 @@ from apps.teams.serializers import TeamParticipantSerializer, TeamSerializer, Pa
 class ParticipantViewSet(viewsets.ModelViewSet):
     queryset = Participant.objects.all()
     serializer_class = ParticipantSerializer
+    pagination_class = PageNumberPagination
 
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
     filterset_fields = ["subcategory"]
+    pagination_class = PageNumberPagination
 
 
 class TeamMembershipViewSet(viewsets.ModelViewSet):
