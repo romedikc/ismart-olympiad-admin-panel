@@ -24,7 +24,7 @@ class TeamMembershipViewSet(viewsets.ModelViewSet):
 class TimeCountViewSet(viewsets.ModelViewSet):
     queryset = TimeCount.objects.all()
     serializer_class = TimeCountSerializer
-    filterset_fields = ["team__is_arrived"]
+    filterset_fields = ["team__is_arrived", "team__subcategory"]
 
 
 class RoundRobinViewSet(viewsets.ModelViewSet):
