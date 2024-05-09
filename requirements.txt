@@ -8,8 +8,9 @@ drf-extra-fields
 djangorestframework-simplejwt
 gunicorn
 dj-database-url
-urllib3==1.26.6
+urllib3
 Pillow
 drf-spectacular
 django-cors-headers
 whitenoise
+django-filter
