@@ -45,7 +45,7 @@ class LoginView(CreateAPIView):
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
-        refresh = RefreshToken.for_user(user, refresh_token_lifetime=timedelta(days=1))
+        refresh = RefreshToken.for_user(user)
         is_superuser = user.is_superuser
 
         return Response(
