@@ -4,6 +4,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from datetime import timedelta
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from apps.accounts.models import User
 from apps.accounts.serializers import RegisterSerializer, LoginSerializer, UserUpdateSerializer
@@ -58,8 +59,8 @@ class LoginView(CreateAPIView):
                 "access": str(refresh.access_token),
             }
         )
-
-
+    
+    
 class GetUsersView(mixins.ListModelMixin,
                    mixins.RetrieveModelMixin,
                    mixins.UpdateModelMixin,
