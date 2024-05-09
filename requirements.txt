@@ -12,3 +12,4 @@ urllib3==1.26.6
 Pillow
 drf-spectacular
 django-cors-headers
+django-filter
