@@ -24,6 +24,9 @@ class TeamSerializer(serializers.ModelSerializer):
                   'participants',
                   'is_arrived',
                   'is_active',
+                  'sumo_group',
+                  'sumo_total_score',
+                  'is_last_sumo_game',
                   'round_robin_total']
         read_only_fields = ['round_robin_total']
 

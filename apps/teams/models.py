@@ -13,13 +13,25 @@ class Participant(models.Model):
 
 
 class Team(models.Model):
+    FIRST = 1
+    SECOND = 2
+    THIRD = 3
+    GROUP_CHOICES = (
+        (FIRST, "First Group"),
+        (SECOND, "Second group"),
+        (THIRD, "Third group")
+    )
     name = models.CharField(max_length=100)
     school = models.CharField(max_length=100)
     subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE)
     participants = models.ManyToManyField(Participant, through='TeamParticipant')
     is_arrived = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
-    round_robin_total = models.IntegerField(default=0)
+    is_last_sumo_game = models.BooleanField(default=False)
+    sumo_group = models.PositiveSmallIntegerField(choices=GROUP_CHOICES,
+                                                  null=True, blank=True)
+    sumo_total_score = models.PositiveIntegerField(default=0)
+    round_robin_total = models.IntegerField(default=0, db_index=True)
 
     def __str__(self):
         return f"{self.school} - {self.name}: {self.subcategory}"
@@ -54,8 +66,12 @@ class TimeCount(models.Model):
 
 
 class RoundRobin(models.Model):
-    team1 = models.ForeignKey(Team, related_name="team1_match", on_delete=models.CASCADE)
-    team2 = models.ForeignKey(Team, related_name="team2_match", on_delete=models.CASCADE)
+    team1 = models.ForeignKey(Team,
+                              related_name="team1_match",
+                              on_delete=models.CASCADE)
+    team2 = models.ForeignKey(Team,
+                              related_name="team2_match",
+                              on_delete=models.CASCADE)
     score_team1 = models.PositiveIntegerField(default=0)
     score_team2 = models.PositiveIntegerField(default=0)
 
@@ -78,7 +94,12 @@ class RoundRobin(models.Model):
             team1.round_robin_total += self.score_team1
             team2.round_robin_total += self.score_team2
 
-            team1.save(update_fields=['round_robin_total'])
-            team2.save(update_fields=['round_robin_total'])
+            if team1.is_last_sumo_game:
+                team1.sumo_total = self.score_team1
+            if team2.is_last_sumo_game:
+                team2.sumo_total = self.score_team2
+
+            team1.save(update_fields=['round_robin_total', 'sumo_total'])
+            team2.save(update_fields=['round_robin_total', 'sumo_total'])
 
             super().save(*args, **kwargs)
