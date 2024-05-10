@@ -11,16 +11,21 @@ def top_teams(group_number):
     
 
 model_to_dict = {
-    Participant: "apps/data/ismart2.csv"
+    Team: "apps/data/school.csv"
 }
 
 def parse_data_from_csv(model, csv_file):
     data_list = read_csv_to_dict(csv_file)
-    for data in data_list:
-        model.objects.create(school=data['school'],
-                             name=data['name'],
-                             subcategory=data['subcategory'],
-                             second_subcategory=data['second_subcategory'])
+    try:
+        for data in data_list:
+            obj = model.objects.create(school=data['school'],
+                                name=data['name'],
+                                subcategory=data['subcategory'],
+                                second_subcategory=data['second_subcategory'])
+            obj.save()
+
+    except Exception as e:
+        print("Error found:", e)
 
 def read_csv_to_dict(file_path):
     data_list = []
@@ -30,7 +35,7 @@ def read_csv_to_dict(file_path):
             for row in reader:
                 data_list.append(row)
     except Exception as e:
-        print("Error found:", e)
+        print("Error found in read_csv_to_dict:", e)
     return data_list
 
 def parse():
