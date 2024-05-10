@@ -4,7 +4,7 @@ from apps.games.models import Subcategory
 
 
 class Participant(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
@@ -14,7 +14,7 @@ class Participant(models.Model):
 
 
 class Team(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     FIRST = 1
     SECOND = 2
     THIRD = 3
