@@ -26,7 +26,8 @@ class Team(models.Model):
     name = models.CharField(max_length=100)
     school = models.CharField(max_length=100)
     subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, related_name='teams_subcategory')
-    second_subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, related_name='teams_second_subcategory', null=True, blank=True)
+    second_subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE,
+                                           related_name='teams_second_subcategory', null=True, blank=True)
     participants = models.ManyToManyField(Participant, through='TeamParticipant')
     is_arrived = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
@@ -99,7 +100,7 @@ class RoundRobin(models.Model):
             if team2.is_last_sumo_game:
                 team2.sumo_total = self.score_team2
 
-            team1.save(update_fields=['round_robin_total', 'sumo_total'])
-            team2.save(update_fields=['round_robin_total', 'sumo_total'])
+            team1.save(update_fields=['round_robin_total', 'sumo_total_score'])
+            team2.save(update_fields=['round_robin_total', 'sumo_total_score'])
 
             super().save(*args, **kwargs)
